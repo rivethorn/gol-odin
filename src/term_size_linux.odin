@@ -15,7 +15,7 @@ get_terminal_size :: proc() -> (col, row: int, ok: bool) {
 	if linux.ioctl(posix.STDOUT_FILENO, linux.TIOCGWINSZ, uintptr(&ws)) == 0 && ws.col > 0 {
 		row = int(ws.row)
 		col = int(ws.col)
-		ok = true
+		ok  = true
 	}
 
 	return col, row, ok

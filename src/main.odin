@@ -12,7 +12,7 @@ import "core:time"
 // === GLOBALS ===
 
 INITIAL_DENSITY :: 0.18
-FRAME_TIME_MS :: 500 * time.Millisecond
+FRAME_TIME_MS   :: 500 * time.Millisecond
 
 running := true
 
@@ -63,10 +63,10 @@ make_grid :: proc(width, height: int) -> (grid: Grid, err: os.Error) {
 		return grid, .EOVERFLOW
 	}
 
-	total := width * height
+	total   := width * height
 
 	current := make([]u16, total) or_return // the error early
-	next := make([]u16, total) or_return
+	next    := make([]u16, total) or_return
 
 	grid = Grid{width, height, current, next}
 
@@ -126,13 +126,12 @@ grid_neighbors_count :: proc(grid: ^Grid, x, y: int) -> (count: int) {
 grid_update :: proc(grid: ^Grid) {
 	for y in 0 ..< grid.height {
 		for x in 0 ..< grid.width {
-			index := grid_index(grid, x, y)
-			age := grid.current[index]
+			index     := grid_index(grid, x, y)
+			age       := grid.current[index]
 			neighbors := grid_neighbors_count(grid, x, y)
-
-			alive := age != 0
-			survives := alive && (neighbors == 2 || neighbors == 3)
-			spawns := !alive && neighbors == 3
+			alive     := age != 0
+			survives  := alive && (neighbors == 2 || neighbors == 3)
+			spawns    := !alive && neighbors == 3
 
 			if survives {
 				grid.next[index] = age + u16(age < max(u16))

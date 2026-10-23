@@ -15,7 +15,7 @@ get_terminal_size :: proc() -> (col, row: int, ok: bool) {
 	if darwin.syscall_ioctl(posix.STDOUT_FILENO, darwin.TIOCGWINSZ, &ws) == 0 && ws.col > 0 {
 		row = int(ws.row)
 		col = int(ws.col)
-		ok = true
+		ok  = true
 	}
 
 	return col, row, ok
